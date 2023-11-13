@@ -5,7 +5,13 @@ const postsController = require('../controller/postsController');
 //index
 router.get('/', postsController.index);
 
+
+//create
+router.get('/create', postsController.create)
+
 //show
 router.get('/:slug', postsController.show)
+
+
 
 module.exports = router;

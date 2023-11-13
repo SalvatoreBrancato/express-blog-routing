@@ -1,6 +1,6 @@
 const postsDb = require('../db/db')
 
-
+//index
 function index(req, res){
     res.format({
         html: ()=>{
@@ -24,18 +24,49 @@ function index(req, res){
     })
 }
 
+//show
 function show(req, res){
     res.format({
         html: ()=>{
+            const post = postsDb.find((post) =>post.slug == req.params.slug)
+            let htmlPost = `
+            <h1>${post.title}</h1>
+            <p>${post.content}</p>
+            <img src="/${post.image}">
+            <ul>`
+                for(let element of post.tags){
 
+                    htmlPost+= `<li>#${element}</li>`
+                }
+            htmlPost+= `</ul>`
+            
+             
+            res.send(htmlPost)
         },
         json: ()=>{
-            res.send()
+            const post = postsDb.find((posts) =>posts.slug == req.params.slug)
+            res.send(post)
+        },
+        default: ()=>{
+            res.status(404).send('Richiesta formato non previto')
+        } 
+    })
+}
+
+//create
+function create(req, res){
+    res.format({
+        html: ()=>{
+            res.send('<h1>Creazione nuovo post</h1>')
+        },
+        default: ()=>{
+            res.status(406).send('Richiesta formato non previto')
         } 
     })
 }
 
 module.exports = {
     index,
-    show
+    show,
+    create
   }
