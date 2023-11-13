@@ -1,4 +1,5 @@
 const postsDb = require('../db/db')
+const path = require("path");
 
 //index
 function index(req, res){
@@ -65,8 +66,14 @@ function create(req, res){
     })
 }
 
+function downloadImage(req, res){
+    res.download(__dirname + '/../public/' + req.params.slug + '.jpeg')
+    
+}
+
 module.exports = {
     index,
     show,
-    create
+    create,
+    downloadImage
   }
